@@ -2,7 +2,6 @@
  * Reference: Algorithm Design Manual
  */
 
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -10,7 +9,6 @@
 #define TRUE 1
 #define FALSE 0
 #define DEBUG 0
-
 #define BASED      3            /* base dimension, 3*3 blocks */
 #define DIMENSION  BASED*BASED      /* 9*9 board */
 
@@ -104,8 +102,8 @@ int backtrack(sudokuboard *board) {
     }
 
     for (num = 1; num <= 9; num++) {
-        /* check if safe to use it */ 
         if (is_valid_candidate(board, num, r, c)) {
+
             /* make move */
             board->m[r][c] = num;
             board->freecount--; 
@@ -137,6 +135,7 @@ void init_board(sudokuboard *board) {
     board->freecount = 0;
     return;
 }
+
 /*
  * Read input csv file representing sudoku
  * valid input values are [0..9]
@@ -150,12 +149,12 @@ int read_board(sudokuboard *board, char *input_board) {
     
 
     init_board(board);
+
     if ((fp = fopen(input_board, "r")) == NULL) {
         printf("Input File Open Failed\n");
         return -1;
     }
     
-
     while((line=fgets(buffer,sizeof(buffer),fp)) != NULL) {
         j = 0;
         tmp = strtok(line, ",");
@@ -201,12 +200,10 @@ int main(int argc, char *argv[]) {
         printf("\nUsage: sudoku board.csv\n");
         return 0;
     }
-    
-    if (read_board(&board, argv[1]) != 0 ) {
+    if ( read_board(&board, argv[1]) != 0 ) {
         printf("\ninput valid 9x9 board\n");
         return 0;
     }
-
     if ( backtrack(&board) == FALSE ) {
         printf("\nProgram couldn't find soln!\n");
         return 0;
