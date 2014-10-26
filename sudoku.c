@@ -22,16 +22,27 @@ typedef struct {
  */
 void print_board(sudokuboard *board) {
     int i,j;
+    FILE *fp = NULL;
 
+    if ((fp=fopen("solved.csv", "w")) == NULL) {
+        perror("Fatal Error: while file creation");
+        return;
+    }
+    
     for (i=0; i < DIMENSION; i++) {
         for (j=0; j < DIMENSION; j++) {
-            if (!j)
-                printf("%d",board->m[i][j]);
-            else
-                printf(",%d",board->m[i][j]);
+            if (!j) {
+                printf("%d", board->m[i][j]);
+                fprintf(fp, "%d", board->m[i][j]);
+            } else {
+                printf(",%d", board->m[i][j]);
+                fprintf(fp, ",%d", board->m[i][j]);
+            }
         }
         printf("\n");
+        fprintf(fp, "\n");
     }
+    fclose(fp);
 }
 
 /*
@@ -151,7 +162,7 @@ int read_board(sudokuboard *board, char *input_board) {
     init_board(board);
 
     if ((fp = fopen(input_board, "r")) == NULL) {
-        printf("Input File Open Failed\n");
+        perror("Input File Open Failed");
         return -1;
     }
     
@@ -201,7 +212,6 @@ int main(int argc, char *argv[]) {
         return 0;
     }
     if ( read_board(&board, argv[1]) != 0 ) {
-        printf("\ninput valid 9x9 board\n");
         return 0;
     }
     if ( backtrack(&board) == FALSE ) {
