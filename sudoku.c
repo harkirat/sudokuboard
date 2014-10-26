@@ -25,7 +25,7 @@ void print_board(sudokuboard *board) {
     FILE *fp = NULL;
 
     if ((fp=fopen("solved.csv", "w")) == NULL) {
-        perror("Fatal Error: while file creation");
+        perror("Fatal Error in File Creation");
         return;
     }
     
@@ -215,7 +215,7 @@ int main(int argc, char *argv[]) {
         return 0;
     }
     if ( backtrack(&board) == FALSE ) {
-        printf("\nProgram couldn't find soln!\n");
+        printf("\nProgram couldn't find soln..!\n");
         return 0;
     }
     return 0;
