@@ -48,7 +48,7 @@ void print_board(sudokuboard *board) {
 /*
  * find first empty value
  */
-int possible_value(sudokuboard *board, int *row, int *col) {
+int next_emptyvalue(sudokuboard *board, int *row, int *col) {
 
     for (*row = 0; *row < DIMENSION; (*row)++) {
         for (*col = 0; *col < DIMENSION; (*col)++) {
@@ -107,7 +107,7 @@ int backtrack(sudokuboard *board) {
         print_board(board);
         return TRUE;    
     }
-    if (possible_value(board, &r, &c) == FALSE) {
+    if (next_emptyvalue(board, &r, &c) == FALSE) {
         printf("%s-%d: Error , there must be an unassigned value\n", __func__, __LINE__);
         return FALSE;
     }
